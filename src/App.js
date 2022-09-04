@@ -37,7 +37,7 @@ const questions = [
 function Result({ correct }) {
   return (
     <div className="result">
-      <img src="/img/joker.gif" alt='gif'/>
+      <img src="./img/joker.gif" alt='gif'/>
       <h2>Вы верно ответили {correct} раз из {questions.length}</h2>
       <a href='/'>
         <button>Попробовать снова</button>
