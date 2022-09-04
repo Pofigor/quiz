@@ -38,7 +38,7 @@ function Result({ correct }) {
   return (
     <div className="result">
       <img src="./img/joker.gif" alt='gif'/>
-      <h2>Вы верно ответили {correct} раз из {questions.length}</h2>
+      <h2>Вы верно ответили на {correct} из {questions.length} вопросов</h2>
       <a href='/'>
         <button>Попробовать снова</button>
       </a>
