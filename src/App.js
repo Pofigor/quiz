@@ -1,58 +1,97 @@
 import './index.scss';
+import React from 'react';
 
 const questions = [
   {
+    title: 'JavaScript - это...?',
+    variants: ['как Java, только Script', 'язык программирования', 'форк биткойна'],
+    correct: 1,
+  },
+  {
     title: 'React - это ... ?',
-    variants: ['библиотека', 'фреймворк', 'приложение'],
+    variants: ['ругательное слово', 'библиотека', 'фреймворк'],
+    correct: 1,
+  },
+  {
+    title: 'Что такое Props?',
+    variants: ['сорт попкорна', 'входные данные (свойства) React-компонентов', 'метод массива'],
+    correct: 1,
+  },
+  {
+    title: 'Что такое useState?',
+    variants: ['функция для хранения данных компонента', 'глобальный стейт', 'степень прожарки стейка'],
     correct: 0,
   },
   {
     title: 'Компонент - это ... ',
-    variants: ['приложение', 'часть приложения или страницы', 'то, что я не знаю что такое'],
+    variants: ['приложение', 'часть приложения или страницы', 'что-то, что нужно с чем-то смешать'],
     correct: 1,
   },
   {
     title: 'Что такое JSX?',
-    variants: [
-      'Это простой HTML',
-      'Это функция',
-      'Это тот же HTML, но с возможностью выполнять JS-код',
-    ],
+    variants: ['Это простой HTML', 'Это функция', 'Это тот же HTML, но с возможностью выполнять JS-код'],
     correct: 2,
   },
 ];
 
-function Result() {
+function Result({ correct }) {
   return (
     <div className="result">
-      <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" />
-      <h2>Вы отгадали 3 ответа из 10</h2>
-      <button>Попробовать снова</button>
+      <img src="/img/joker.gif" />
+      <h2>Вы верно ответили {correct} раз из {questions.length}</h2>
+      <a href='/'>
+        <button>Попробовать снова</button>
+      </a>
     </div>
   );
 }
 
-function Game() {
+function Game({ step, question, onClickVariant }) {
+
+  const percentage = Math.round((step / questions.length) * 100);
+
   return (
     <>
       <div className="progress">
-        <div style={{ width: '50%' }} className="progress__inner"></div>
+        <div style={{ width: `${percentage}%` }} className="progress__inner"></div>
       </div>
-      <h1>Что такое useState?</h1>
+      <h1>{question.title}</h1>
       <ul>
-        <li>Это функция для хранения данных компонента</li>
-        <li>Это глобальный стейт</li>
-        <li>Это когда на ты никому не нужен</li>
+        {
+          question.variants.map((el, index) => (
+            <li onClick={() => onClickVariant(index)} key={el}>{el}</li>
+          ))
+        }
       </ul>
     </>
   );
 }
 
 function App() {
+
+  const [step, setStep] = React.useState(0);
+  const [correct, setCorrect] = React.useState(0);
+
+  const question = questions[step];
+
+
+  const onClickVariant = (index) => {
+    console.log(step, index);
+    setStep(step + 1);
+
+    if (index === question.correct) {
+      setCorrect(correct + 1);
+    }
+
+  };
+
   return (
     <div className="App">
-      <Game />
-      {/* <Result /> */}
+      {
+        step !== questions.length
+          ? <Game step={step} question={question} onClickVariant={onClickVariant} />
+          : <Result correct={correct} />
+      }
     </div>
   );
 }
