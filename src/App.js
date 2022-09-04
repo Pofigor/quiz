@@ -39,7 +39,7 @@ function Result({ correct }) {
     <div className="result">
       <img src="./img/joker.gif" alt='gif'/>
       <h2>Вы верно ответили на {correct} из {questions.length} вопросов</h2>
-      <a href='/'>
+      <a href='https://pofigor.github.io/quiz/'>
         <button>Попробовать снова</button>
       </a>
     </div>
